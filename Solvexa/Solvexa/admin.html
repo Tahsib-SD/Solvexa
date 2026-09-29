@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solvexa Admin Dashboard</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+  <!-- AUTH VIEW -->
+  <div id="authView" class="auth-container">
+    <div class="auth-card">
+      <div class="auth-header">
+        <div class="auth-logo">
+          <span class="logo-mark">S</span>
+        </div>
+        <h1>Solvexa Admin</h1>
+        <p>Professional Content Management</p>
+      </div>
+
+      <form id="loginForm" class="auth-form">
+        <div class="form-group">
+          <label for="adminEmail">Admin Email</label>
+          <input 
+            type="email" 
+            id="adminEmail" 
+            placeholder="admin@example.com" 
+            required
+            autocomplete="email"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="adminPassword">Password</label>
+          <input 
+            type="password" 
+            id="adminPassword" 
+            placeholder="••••••••" 
+            required
+            autocomplete="current-password"
+          >
+        </div>
+
+        <div id="authError" class="alert alert-error" style="display: none;"></div>
+
+        <button type="submit" class="btn btn-primary" id="loginBtn">
+          Sign In
+        </button>
+
+        <div class="auth-footer">
+          <a href="reset-password.html" class="auth-link">Forgot password?</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- DASHBOARD VIEW -->
+  <div id="dashboardView" class="dashboard-container" style="display: none;">
+    
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <span class="logo-mark">S</span>
+          <span>Solvexa</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button class="nav-item active" data-view="dashboard">
+          <span class="nav-icon">📊</span>
+          <span>Dashboard</span>
+        </button>
+        <button class="nav-item" data-view="add-solution">
+          <span class="nav-icon">➕</span>
+          <span>Add Solution</span>
+        </button>
+        <button class="nav-item" data-view="all-solutions">
+          <span class="nav-icon">📚</span>
+          <span>All Solutions</span>
+        </button>
+        <button class="nav-item" data-view="pending">
+          <span class="nav-icon">⏳</span>
+          <span>Pending</span>
+          <span class="badge" id="pendingBadge" style="display: none;">0</span>
+        </button>
+        <button class="nav-item" data-view="analytics">
+          <span class="nav-icon">📈</span>
+          <span>Analytics</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="nav-item danger" id="logoutBtn">
+          <span class="nav-icon">🚪</span>
+          <span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+      
+      <!-- TOP BAR -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <h1 id="viewTitle">Dashboard</h1>
+          <p id="viewSubtitle"></p>
+        </div>
+        <div class="topbar-right">
+          <button class="icon-btn" id="themeBtn" title="Toggle dark mode">🌙</button>
+          <div class="admin-profile">
+            <span id="adminNameDisplay">Admin</span>
+            <div class="profile-avatar" id="profileAvatar">A</div>
+          </div>
+        </div>
+      </header>
+
+      <!-- CONTENT AREA -->
+      <div class="content-area">
+
+        <!-- DASHBOARD VIEW -->
+        <div id="view-dashboard" class="view-section active">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon">📚</div>
+              <div class="stat-content">
+                <div class="stat-value" id="totalSolutions">0</div>
+                <div class="stat-label">Total Solutions</div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon">👤</div>
+              <div class="stat-content">
+                <div class="stat-value" id="totalViews">0</div>
+                <div class="stat-label">Total Views</div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon">👍</div>
+              <div class="stat-content">
+                <div class="stat-value" id="totalHelpful">0</div>
+                <div class="stat-label">Helpful Feedback</div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon">⏳</div>
+              <div class="stat-content">
+                <div class="stat-value" id="pendingCount">0</div>
+                <div class="stat-label">Pending Items</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dashboard-grid">
+            <div class="dashboard-section">
+              <h2>Recent Solutions</h2>
+              <div id="recentSolutions" class="recent-list"></div>
+            </div>
+
+            <div class="dashboard-section">
+              <h2>Quick Actions</h2>
+              <div class="quick-actions">
+                <button class="quick-action-btn" data-view="add-solution">
+                  <div class="qa-icon">➕</div>
+                  <div class="qa-label">Add Solution</div>
+                </button>
+                <button class="quick-action-btn" data-view="all-solutions">
+                  <div class="qa-icon">📋</div>
+                  <div class="qa-label">Manage Solutions</div>
+                </button>
+                <button class="quick-action-btn" data-view="pending">
+                  <div class="qa-icon">⏳</div>
+                  <div class="qa-label">Review Pending</div>
+                </button>
+                <button class="quick-action-btn" data-view="analytics">
+                  <div class="qa-icon">📊</div>
+                  <div class="qa-label">View Analytics</div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ADD SOLUTION VIEW -->
+        <div id="view-add-solution" class="view-section">
+          <div class="form-container">
+            <div id="reviewBanner" class="alert alert-success" style="display: none;">
+              🙋 Reviewing a reader's submission — fill in the remaining fields (title, type,
+              difficulty, keywords) and publish or save as draft below.
+              <button type="button" id="cancelReviewBtn" class="btn btn-secondary" style="margin-left: 12px; padding: 4px 10px; font-size: 12px;">
+                Cancel review
+              </button>
+            </div>
+            <form id="addSolutionForm" class="solution-form">
+              <input type="hidden" id="reviewingSubmissionId">
+              <div class="form-section">
+                <h3>Basic Information</h3>
+                
+                <div class="form-grid-2">
+                  <div class="form-group">
+                    <label for="solutionTitle">Solution Title *</label>
+                    <input 
+                      type="text" 
+                      id="solutionTitle" 
+                      placeholder="e.g., How to prepare for an exam" 
+                      required
+                    >
+                  </div>
+
+                  <div class="form-group">
+                    <label for="solutionCategory">Category *</label>
+                    <input 
+                      type="text" 
+                      id="solutionCategory" 
+                      placeholder="Type or select: Study, Cooking, etc." 
+                      list="categoryList"
+                      required
+                    >
+                    <datalist id="categoryList">
+                      <option value="Study">📚 Study & Learning</option>
+                      <option value="Planning">🗓️ Planning & Productivity</option>
+                      <option value="Cooking">🍳 Cooking & Food</option>
+                      <option value="Exercise">🏃 Exercise & Fitness</option>
+                      <option value="Technology">💻 Technology</option>
+                      <option value="Everyday Life">🏠 Everyday Life</option>
+                    </datalist>
+                  </div>
+                </div>
+
+                <div class="form-grid-2">
+                  <div class="form-group">
+                    <label for="solutionType">Solution Type *</label>
+                    <input 
+                      type="text" 
+                      id="solutionType" 
+                      placeholder="Type or select: How-To, Guide, Tips, etc." 
+                      list="typeList"
+                      required
+                    >
+                    <datalist id="typeList">
+                      <option value="How-To">How-To Guide</option>
+                      <option value="Guide">Step-by-Step Guide</option>
+                      <option value="Tips">Tips & Advice</option>
+                      <option value="Plan">Plans & Routines</option>
+                      <option value="Checklist">Checklist</option>
+                      <option value="Explanation">Explanation</option>
+                      <option value="Troubleshooting">Troubleshooting</option>
+                    </datalist>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="solutionDifficulty">Difficulty Level *</label>
+                    <input 
+                      type="text" 
+                      id="solutionDifficulty" 
+                      placeholder="Type or select: Beginner, Intermediate, Advanced" 
+                      list="difficultyList"
+                      required
+                    >
+                    <datalist id="difficultyList">
+                      <option value="Beginner">🟢 Beginner</option>
+                      <option value="Intermediate">🟡 Intermediate</option>
+                      <option value="Advanced">🔴 Advanced</option>
+                    </datalist>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="solutionLanguage">Language *</label>
+                  <input 
+                    type="text" 
+                    id="solutionLanguage" 
+                    placeholder="Type or select: English, Bengali, Spanish, etc." 
+                    list="languageList"
+                    value="English"
+                    required
+                  >
+                  <datalist id="languageList">
+                    <option value="English">🇺🇸 English</option>
+                    <option value="Spanish">🇪🇸 Spanish</option>
+                    <option value="Bengali">🇧🇩 Bengali</option>
+                    <option value="French">🇫🇷 French</option>
+                    <option value="Arabic">🇸🇦 Arabic</option>
+                    <option value="Chinese">🇨🇳 Chinese</option>
+                    <option value="Hindi">🇮🇳 Hindi</option>
+                    <option value="Portuguese">🇵🇹 Portuguese</option>
+                  </datalist>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <h3>Content</h3>
+
+                <div class="form-group">
+                  <label for="solutionProblem">Problem Statement *</label>
+                  <textarea 
+                    id="solutionProblem" 
+                    placeholder="What problem does this solution address?" 
+                    rows="3"
+                    required
+                  ></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="solutionContent">Solution Content *</label>
+                  <textarea 
+                    id="solutionContent" 
+                    placeholder="Detailed solution steps and instructions" 
+                    rows="10"
+                    required
+                  ></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="solutionKeywords">Keywords (comma-separated)</label>
+                  <input 
+                    type="text" 
+                    id="solutionKeywords" 
+                    placeholder="e.g., exam, preparation, study, test"
+                  >
+                </div>
+              </div>
+
+              <div class="form-section">
+                <h3>Admin Notes (Private)</h3>
+                
+                <div class="form-group">
+                  <label for="solutionNotes">Internal Notes</label>
+                  <textarea 
+                    id="solutionNotes" 
+                    placeholder="Only visible to admins - use for reminders, sources, etc." 
+                    rows="4"
+                  ></textarea>
+                </div>
+              </div>
+
+              <div id="formError" class="alert alert-error" style="display: none;"></div>
+              <div id="formSuccess" class="alert alert-success" style="display: none;"></div>
+
+              <div class="form-actions">
+                <button type="button" class="btn btn-secondary" id="saveDraftBtn">
+                  💾 Save as Draft
+                </button>
+                <button type="submit" class="btn btn-primary">
+                  ✅ Publish Solution
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- ALL SOLUTIONS VIEW -->
+        <div id="view-all-solutions" class="view-section">
+          <div class="solutions-toolbar">
+            <div class="search-box">
+              <input 
+                type="search" 
+                id="solutionSearch" 
+                placeholder="Search solutions..."
+              >
+            </div>
+            <div class="filter-group">
+              <select id="filterCategory">
+                <option value="">All Categories</option>
+                <option value="Study">Study</option>
+                <option value="Planning">Planning</option>
+                <option value="Cooking">Cooking</option>
+                <option value="Exercise">Exercise</option>
+                <option value="Technology">Technology</option>
+                <option value="Everyday Life">Everyday Life</option>
+              </select>
+              <select id="filterStatus">
+                <option value="">All Status</option>
+                <option value="Draft">Draft</option>
+                <option value="Published">Published</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="solutionsTable" class="solutions-table-container">
+            <!-- Table will be inserted here -->
+          </div>
+        </div>
+
+        <!-- PENDING SUBMISSIONS VIEW -->
+        <div id="view-pending" class="view-section">
+          <div id="pendingList" class="pending-list">
+            <!-- Pending submissions will be inserted here -->
+          </div>
+        </div>
+
+        <!-- ANALYTICS VIEW -->
+        <div id="view-analytics" class="view-section">
+          <div class="analytics-grid">
+            <div class="analytics-card">
+              <h3>Most Viewed Solutions</h3>
+              <div id="mostViewed" class="analytics-list"></div>
+            </div>
+
+            <div class="analytics-card">
+              <h3>Most Helpful Solutions</h3>
+              <div id="mostHelpful" class="analytics-list"></div>
+            </div>
+
+            <div class="analytics-card">
+              <h3>Category Distribution</h3>
+              <div id="categoryStats" class="analytics-list"></div>
+            </div>
+
+            <div class="analytics-card">
+              <h3>Difficulty Distribution</h3>
+              <div id="difficultyStats" class="analytics-list"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- EDIT MODAL -->
+  <div id="editModal" class="modal" style="display: none;">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Edit Solution</h2>
+        <button class="modal-close" id="closeEditModal">&times;</button>
+      </div>
+      <form id="editForm" class="solution-form">
+        <input type="hidden" id="editSolutionId">
+        
+        <div class="form-group">
+          <label for="editTitle">Title</label>
+          <input type="text" id="editTitle" required>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="editCategory">Category</label>
+            <input type="text" id="editCategory" required>
+          </div>
+          <div class="form-group">
+            <label for="editDifficulty">Difficulty</label>
+            <input type="text" id="editDifficulty" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="editProblem">Problem</label>
+          <textarea id="editProblem" rows="3" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="editContent">Content</label>
+          <textarea id="editContent" rows="8" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="editStatus">Status</label>
+          <select id="editStatus" required>
+            <option value="Draft">Draft</option>
+            <option value="Published">Published</option>
+          </select>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" id="cancelEditBtn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- SUPABASE CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

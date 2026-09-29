@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solvexa | Find Practical Solutions</title>
+  <!-- Search / share preview tags -->
+  <meta name="description" content="Search, filter, and discover practical solutions to everyday problems.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Solvexa | Find Practical Solutions">
+  <meta property="og:description" content="Search, filter, and discover practical solutions to everyday problems.">
+  <meta name="twitter:card" content="summary">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#f6f7fb" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0d0f14" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="assets/icons/icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Solvexa">
+</head>
+<body>
+
+  <header class="header">
+    <nav class="nav">
+      <a class="logo" href="#" id="logoBtn">
+        <span class="logo-mark">S</span><span>Solvexa</span>
+      </a>
+      <div class="nav-right">
+        <button class="icon-btn" id="themeBtn" aria-label="Toggle dark mode" title="Dark Mode">🌙</button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="main">
+    <!-- HOME VIEW -->
+    <section id="view-home" class="view active">
+      <div class="hero">
+        <div class="badge">🔍 Find Practical Solutions</div>
+        <h1>Find a <span>solution.</span><br>Solve a problem.</h1>
+        <p>Find practical, reliable solutions for everyday problems.</p>
+        
+        <div class="search-wrap">
+          <div class="search-box">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
+            </svg>
+            <input 
+              id="searchInput" 
+              type="search" 
+              placeholder="Search for anything... " 
+              autocomplete="off" 
+              aria-label="Search solutions"
+            >
+          </div>
+          <div class="search-hint">💡 Search problems, questions, and solutions </div>
+          <button type="button" class="suggest-link" data-action="open-suggest">
+            🙋 Can't find your problem? <span>Suggest a Solution</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Advanced Filters: Category → Solution Type → Language -->
+      <div class="filters-section">
+        <div class="filter-group">
+          <label for="categoryFilter" class="filter-label">Category</label>
+          <select id="categoryFilter" class="filter-select" aria-label="Filter by category">
+            <option value="All">All Categories</option>
+            <option value="Study"> Study & Learning</option>
+            <option value="Planning"> Planning & Productivity</option>
+            <option value="Cooking"> Cooking & Food</option>
+            <option value="Technology"> Technology</option>
+            <option value="Exercise"> Exercise & Fitness</option>
+            <option value="Everyday Life"> Everyday Life</option>
+            <option value="Personal Development"> Personal Development</option>
+            <option value="Communication"> Communication</option>
+            <option value="Career"> Career & Work</option>
+            <option value="Finance"> Money & Financial Education</option>
+            <option value="Home"> Home & Household</option>
+            <option value="Travel"> Travel</option>
+            <option value="Transportation"> Transportation</option>
+            <option value="Health"> Health & Wellness</option>
+            <option value="Relationships"> Relationships</option>
+            <option value="Family"> Family & Parenting</option>
+            <option value="Organization"> Organization</option>
+            <option value="Creativity"> Creativity & Design</option>
+            <option value="Writing"> Writing & Reading</option>
+            <option value="Language"> Language Learning</option>
+            <option value="Science"> Science</option>
+            <option value="Math"> Math</option>
+            <option value="Programming"> Programming & Coding</option>
+            <option value="Digital Skills"> Digital Skills</option>
+            <option value="Problem Solving"> Problem Solving</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="typeFilter" class="filter-label">Solution Type</label>
+          <select id="typeFilter" class="filter-select" aria-label="Filter by solution type">
+            <option value="All">All Types</option>
+            <option value="How-To">How-To Guide</option>
+            <option value="Guide">Step-by-Step Guide</option>
+            <option value="Tips">Tips & Advice</option>
+            <option value="Plan">Plans & Routines</option>
+            <option value="Checklist">Checklist</option>
+            <option value="Explanation">Explanation</option>
+            <option value="Troubleshooting">Troubleshooting</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="languageFilter" class="filter-label">Language</label>
+          <select id="languageFilter" class="filter-select" aria-label="Filter by language">
+            <option value="All">All Languages</option>
+            <option value="English">🇺🇸 English</option>
+            <option value="Spanish">🇪🇸 Spanish</option>
+            <option value="Bengali">🇧🇩 Bengali</option>
+            <option value="French">🇫🇷 French</option>
+            <option value="Arabic">🇸🇦 Arabic</option>
+            <option value="Chinese">🇨🇳 Chinese</option>
+            <option value="Hindi">🇮🇳 Hindi</option>
+            <option value="Portuguese">🇵🇹 Portuguese</option>
+            <option value="German">🇩🇪 German</option>
+            <option value="Japanese">🇯🇵 Japanese</option>
+          </select>
+        </div>
+      </div>
+
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <h2 id="sectionTitle">System Registry</h2>
+            <p id="resultCount"></p>
+          </div>
+          <div class="sort-group">
+            <label for="sortBy" class="sort-label">Sort by:</label>
+            <select id="sortBy" class="sort-select">
+              <option value="recent">Most Recent</option>
+              <option value="popular">Most Helpful</option>
+              <option value="title">Title (A-Z)</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid" id="cardsContainer" role="region" aria-live="polite" aria-label="Solutions list">
+          <!-- Cards will be injected here -->
+        </div>
+      </section>
+    </section>
+
+    <!-- DETAIL VIEW -->
+    <section id="view-detail" class="view detail">
+      <button class="back-btn" id="backBtn" aria-label="Go back to list">
+        ← Back to Results
+      </button>
+      
+      <article class="detail-card">
+        <div class="detail-header">
+          <div class="detail-meta" id="detailMeta"></div>
+          <h1 id="detailTitle"></h1>
+          <div class="detail-stats" id="detailStats"></div>
+        </div>
+
+        <div class="detail-body">
+          <div class="question-box">
+            <strong>Question:</strong>
+            <p id="detailProblem"></p>
+          </div>
+
+          <div class="content" id="detailContent"></div>
+
+          <div class="difficulty-badge" id="difficultyBadge"></div>
+        </div>
+
+        <div class="actions" id="detailActions">
+          <div class="action-group">
+            <button class="action-btn helpful-btn" data-action="helpful" aria-label="Mark as helpful">
+              👍 Helpful
+            </button>
+            <button class="action-btn unhelpful-btn" data-action="unhelpful" aria-label="Mark as not helpful">
+              👎 Not Helpful
+            </button>
+          </div>
+
+          <div class="action-group">
+            <button class="action-btn" data-action="save" id="saveBtn" aria-label="Save this solution">
+              🔖 Save
+            </button>
+            <button class="action-btn" data-action="share" aria-label="Share this solution">
+              🔗 Share
+            </button>
+            <button class="action-btn" data-action="copy" aria-label="Copy solution content">
+              📋 Copy
+            </button>
+          </div>
+        </div>
+
+        <!-- Related Solutions -->
+        <section class="related-section" id="relatedSection" style="display: none;">
+          <h3>Related Solutions</h3>
+          <div class="related-list" id="relatedList"></div>
+        </section>
+
+        <!-- Suggest a Solution nudge -->
+        <section class="suggest-nudge">
+          <p>Got a better answer, or a related problem we're missing?</p>
+          <button type="button" class="btn-secondary" data-action="open-suggest">
+            🙋 Suggest a Solution
+          </button>
+        </section>
+      </article>
+    </section>
+  </main>
+
+  <!-- Toast Container -->
+  <div id="toastContainer" class="toast-container" role="region" aria-live="polite" aria-label="Notifications"></div>
+
+  <!-- Suggest a Solution Modal -->
+  <div id="suggestModal" class="modal" style="display: none;">
+    <div class="modal-backdrop" data-action="close-suggest"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>🙋 Suggest a Solution</h2>
+        <button type="button" class="modal-close" data-action="close-suggest" aria-label="Close">&times;</button>
+      </div>
+      <form id="suggestForm" class="suggest-form">
+        <p class="modal-subtitle">
+          Can't find what you're looking for? Tell us the problem — and if you already know a good
+          solution, share that too. Our team reviews every submission before it goes live.
+        </p>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="suggestCategory">Category</label>
+            <select id="suggestCategory">
+              <option value="Study">Study & Learning</option>
+              <option value="Planning">Planning & Productivity</option>
+              <option value="Cooking">Cooking & Food</option>
+              <option value="Technology">Technology</option>
+              <option value="Exercise">Exercise & Fitness</option>
+              <option value="Everyday Life">Everyday Life</option>
+              <option value="Personal Development">Personal Development</option>
+              <option value="Communication">Communication</option>
+              <option value="Career">Career & Work</option>
+              <option value="Finance">Money & Financial Education</option>
+              <option value="Home">Home & Household</option>
+              <option value="Travel">Travel</option>
+              <option value="Transportation">Transportation</option>
+              <option value="Health">Health & Wellness</option>
+              <option value="Relationships">Relationships</option>
+              <option value="Family">Family & Parenting</option>
+              <option value="Organization">Organization</option>
+              <option value="Creativity">Creativity & Design</option>
+              <option value="Writing">Writing & Reading</option>
+              <option value="Language">Language Learning</option>
+              <option value="Science">Science</option>
+              <option value="Math">Math</option>
+              <option value="Programming">Programming & Coding</option>
+              <option value="Digital Skills">Digital Skills</option>
+              <option value="Problem Solving">Problem Solving</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="suggestLanguage">Language</label>
+            <select id="suggestLanguage">
+              <option value="English">🇺🇸 English</option>
+              <option value="Spanish">🇪🇸 Spanish</option>
+              <option value="Bengali">🇧🇩 Bengali</option>
+              <option value="French">🇫🇷 French</option>
+              <option value="Arabic">🇸🇦 Arabic</option>
+              <option value="Chinese">🇨🇳 Chinese</option>
+              <option value="Hindi">🇮🇳 Hindi</option>
+              <option value="Portuguese">🇵🇹 Portuguese</option>
+              <option value="German">🇩🇪 German</option>
+              <option value="Japanese">🇯🇵 Japanese</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="suggestProblem">What's the problem? *</label>
+          <textarea
+            id="suggestProblem"
+            rows="3"
+            maxlength="2000"
+            required
+            placeholder="e.g. How do I stay focused while studying at home?"
+          ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="suggestSolution">Your suggested solution (optional)</label>
+          <textarea
+            id="suggestSolution"
+            rows="5"
+            maxlength="5000"
+            placeholder="If you already have an answer, share it here — every bit helps!"
+          ></textarea>
+        </div>
+
+        <div id="suggestError" class="form-alert form-alert-error" style="display: none;"></div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" data-action="close-suggest">Cancel</button>
+          <button type="submit" class="btn-primary" id="suggestSubmitBtn">Submit for Review</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>Solvexa • Find solutions, solve problems • v2.0</p>
+  </footer>
+
+  <!-- One-time clean-up: removes any old service worker / cached files left over from
+       earlier testing, then reloads once so the page loads fresh. Safe to keep. -->
+  <script>
+    (function () {
+      if (!("serviceWorker" in navigator)) return;
+      navigator.serviceWorker.getRegistrations().then(function (regs) {
+        if (!regs.length) return;
+        Promise.all(regs.map(function (r) { return r.unregister(); }))
+          .then(function () { return window.caches ? caches.keys() : []; })
+          .then(function (keys) { return Promise.all(keys.map(function (k) { return caches.delete(k); })); })
+          .then(function () {
+            if (!sessionStorage.getItem("sx_sw_cleaned")) {
+              sessionStorage.setItem("sx_sw_cleaned", "1");
+              location.reload();
+            }
+          });
+      });
+    })();
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js"></script>
+</body>
+</html>
